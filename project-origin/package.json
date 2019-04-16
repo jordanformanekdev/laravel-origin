@@ -22,5 +22,10 @@
         "sass-loader": "^7.1.0",
         "vue": "^2.5.17",
         "vue-template-compiler": "^2.6.7"
+    },
+    "dependencies": {
+        "babel-loader": "^8.0.5",
+        "gulp": "^4.0.0",
+        "vue-loader": "^15.7.0"
     }
 }

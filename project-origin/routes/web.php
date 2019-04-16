@@ -28,6 +28,11 @@
 /**** Pages ****/
 Route::get('/', 'PagesController@home');
 Route::get('/about', 'PagesController@about');
+Route::get('/products', function() {
+  $products = App\Product::all();
+
+  return view('products.products', compact('products'));
+}) ;
 
 /**** Projects ****/
 Route::resource('projects', 'ProjectsController');
@@ -36,6 +41,10 @@ Route::resource('projects', 'ProjectsController');
 Route::post('/projects/{project}/tasks', 'ProjectTasksController@store');
 Route::patch('/tasks/{task}', 'ProjectTasksController@update');
 
+Route::post('/stripe/webhook', 'WebhooksController@handle');
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::post('/purchases', 'PurchasesController@store');
+Route::post('/subscriptions', 'SubscriptionsController@store');

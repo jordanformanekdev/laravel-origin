@@ -7,17 +7,36 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>@yield('title')</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
-
+    <script name="StripeCheckout" src="https://checkout.stripe.com/checkout.js"></script>
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/checkout-form.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/subscription-form.css') }}" rel="stylesheet">
+
+    <!-- Global Script -->
+    <script type="text/javascript">
+      var Laravel = {
+        csrfToken: "{{ csrf_token() }}",
+        stripeKey: "{{ config('services.stripe.key') }}"
+      };
+    </script>
+
+    @if(Auth::check())
+      <script type="text/javascript">
+        var AuthUser = {
+          email: "{{ auth()->user()->email }}"
+        };
+      </script>
+    @endif
+
 </head>
 <body>
     <div id="app">

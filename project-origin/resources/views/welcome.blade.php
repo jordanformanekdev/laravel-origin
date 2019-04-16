@@ -1,9 +1,8 @@
-@extends('layout')
+@extends('layouts.app')
 
 @section('title', "Welcome")
 
 @section('content')
 
-  <h1>My {{ $foo }} First Website</h1>
 
 @endsection

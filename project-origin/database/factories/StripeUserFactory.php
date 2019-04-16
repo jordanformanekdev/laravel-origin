@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Str;
 use Faker\Generator as Faker;
+use App\StripeUser;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,13 +15,13 @@ use Faker\Generator as Faker;
 |
 */
 
-$factory->define(App\User::class, function (Faker $faker) {
+$factory->define(App\StripeUser::class, function (Faker $faker) {
     return [
-        'name' => $faker->name,
-        'email' => $faker->unique()->safeEmail,
-        'email_verified_at' => now(),
-        'password' => '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm', // secret
-        'remember_token' => Str::random(10),
-        'stripe_id' => 1
+      'stripe_active' => 0,
+      'stripe_id' => 'fake_user_id',
+      'user_id' => 1,
+      
+        // 'subscription_end_at' => now(), // secret
+        // 'remember_token' => Str::random(10),
     ];
 });

@@ -3,15 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Product;
+use App\Plan;
 
 class PagesController extends Controller
 {
     //
     public function home()
     {
-      return view('welcome', [
-        'foo' => 'bar'
-      ]);
+      $products = Product::all();
+      $plans = Plan::all();
+      return view('welcome', compact('products', 'plans'));
     }
 
     public function about()
