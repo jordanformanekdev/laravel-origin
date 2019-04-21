@@ -4,11 +4,11 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use App\User;
-use App\Plan;
+use App\Product;
 use Stripe\{Charge, Customer, Source, Subscription};
 
 
-class RegistrationForm extends FormRequest
+class PurchaseForm extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -30,17 +30,17 @@ class RegistrationForm extends FormRequest
         return [
             'stripeEmail' => 'required|email',
             'stripeToken' => 'required',
-            'plan' => 'required'
+            'product' => 'required'
         ];
     }
 
-    public function subscribeUser()
+    public function chargeUser()
     {
-      $plan = Plan::findOrFail($this->plan);
+      $product = Product::findOrFail($this->product);
 
-      $message = $this->user()->createUserSubscription($plan, $this->stripeToken);
+      $message = $this->user()->createUserCharge($product->price);
 
-      return $message;
+      return $message->outcome->seller_message;
     }
 
 }

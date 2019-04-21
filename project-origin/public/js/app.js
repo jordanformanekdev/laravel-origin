@@ -1778,13 +1778,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['products'],
   data: function data() {
     return {
       stripeEmail: '',
       stripeToken: '',
-      product: 1
+      product: 1,
+      status: false
     };
   },
   created: function created() {
@@ -1802,7 +1806,7 @@ __webpack_require__.r(__webpack_exports__);
         _this.stripeEmail = _token.email;
         console.log("CHECK2" + _this.$data);
         axios.post('/purchases', _this.$data).then(function (response) {
-          alert('Complete! Thanks for your payment!');
+          _this.status = response.data.status;
         }).catch(function (error) {
           console.log(error);
         });
@@ -37051,6 +37055,23 @@ var render = function() {
           }
         },
         [_vm._v("Buy My Book")]
+      ),
+      _vm._v(" "),
+      _c(
+        "p",
+        {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: _vm.status,
+              expression: "status"
+            }
+          ],
+          staticClass: "help is-danger",
+          domProps: { textContent: _vm._s(_vm.status) }
+        },
+        [_vm._v(_vm._s(_vm.status))]
       )
     ]
   )

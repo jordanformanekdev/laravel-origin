@@ -4,27 +4,29 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use Stripe\{Charge, Customer};
-use App\Product;
+use App\Http\Requests\PurchaseForm;
+
 
 class PurchasesController extends Controller
 {
 
-    public function store()
+    public function store(PurchaseForm $form)
     {
-      $product = Product::findOrFail(request('product'));
+      // subscription
+      try {
 
-      $customer = Customer::create([
-        'email' => request('stripeEmail'),
-        'source' => request('stripeToken')
-      ]);
+        $message = $form->chargeUser();
 
-      $charge = Charge::create([
-        'customer' => $customer->id,
-        'amount' => $product->price,
-        'currency' => 'usd'
-      ]);
+      } catch (\Exception $e) {
 
-      return 'All Done';
+        return response()->json(
+
+          ['status' => $e->getMessage()], 422
+
+        );
+
+      }
+
+      return ['status' => $message];
     }
 }
