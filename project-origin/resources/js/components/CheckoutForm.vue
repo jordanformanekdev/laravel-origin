@@ -10,6 +10,9 @@
     </select>
 
     <button type="submit" name="button" @click.prevent="buy">Buy My Book</button>
+
+    <p class="help is-danger" v-show="status" v-text="status">{{ status }}</p>
+
   </form>
 </template>
 
@@ -21,7 +24,8 @@
           return {
             stripeEmail:'',
             stripeToken:'',
-            product: 1
+            product: 1,
+            status: false
           }
         },
 
@@ -39,7 +43,7 @@
                 console.log("CHECK2" + this.$data);
                 axios.post('/purchases', this.$data)
                   .then(response => {
-                    alert('Complete! Thanks for your payment!')
+                    this.status = response.data.status
                   })
                   .catch(error => {
                     console.log(error)

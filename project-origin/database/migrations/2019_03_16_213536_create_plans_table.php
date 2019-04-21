@@ -14,11 +14,13 @@ class CreatePlansTable extends Migration
     public function up()
     {
         Schema::create('plans', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name');
-            $table->string('plan_id');
-            $table->integer('price');
-            $table->timestamps();
+          $table->increments('id');
+          $table->string('name');
+          $table->string('slug')->unique()->nullable();
+          $table->string('plan_id');
+          $table->integer('price');
+          $table->text('description')->nullable();
+          $table->timestamps();
         });
     }
 
