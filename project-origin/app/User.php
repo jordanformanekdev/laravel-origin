@@ -47,6 +47,16 @@ class User extends Authenticatable
       return $this->hasMany(Project::class, 'owner_id');
     }
 
+    public function details()
+    {
+      return response()->json(
+        [
+          'name' => $this->name,
+          'email' => $this->email,
+        ]
+      );
+    }
+
     public function createUserSubscription($plan, $token) {
 
       if (!$this->subscribed($plan->name)) {

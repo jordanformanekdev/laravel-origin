@@ -41,6 +41,9 @@ Route::resource('projects', 'ProjectsController');
 Route::post('/projects/{project}/tasks', 'ProjectTasksController@store');
 Route::patch('/tasks/{task}', 'ProjectTasksController@update');
 
+/**** Projects ****/
+Route::get('/user/profile', 'UserProfileController@index');
+
 Route::post('/stripe/webhook', 'WebhooksController@handle');
 
 Auth::routes();
