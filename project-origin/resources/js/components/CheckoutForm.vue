@@ -30,8 +30,6 @@
         },
 
         created() {
-          console.log("Laravel CSRF ++ ");
-          console.log("CHECK2" + Laravel.user);
           this.stripe = StripeCheckout.configure({
               key: Laravel.stripeKey,
               image: "https://stripe.com/img/documentation/checkout/marketplace.png",

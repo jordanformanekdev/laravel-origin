@@ -1,18 +1,11 @@
-@extends('layouts.app')
+@extends('layouts.container')
 
-@section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Dashboard</div>
-                  <h2>{{ $user->name }}</h2>
-                  <h2>{{ $user->email }}</h2>
-                  <checkout-form :products="{{ $products }}"></checkout-form>
-                  <subscription-form :plans="{{ $plans }}"></subscription-form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+@section('panel-center')
+
+  <img class="profile-photo" src="{{ URL::asset($profileImage->publciPath()) }}">
+  <a href="/profile-image/create">Edit Image</a>
+  <h2>{{ $user->name }}</h2>
+  <h2>{{ $user->email }}</h2>
+  <p>Biography</p>
+
 @endsection

@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\ProfileImage;
 use App\StripeUser;
 use App\StripeSubscription;
 use Stripe\Customer;
@@ -47,6 +48,11 @@ class User extends Authenticatable
       return $this->hasMany(Project::class, 'owner_id');
     }
 
+    public function profileImages()
+    {
+      return $this->hasMany(ProfileImage::class);
+    }
+
     public function details()
     {
       return response()->json(
@@ -55,6 +61,11 @@ class User extends Authenticatable
           'email' => $this->email,
         ]
       );
+    }
+
+    public function active()
+    {
+      return $this->stripe_id;
     }
 
     public function createUserSubscription($plan, $token) {
@@ -90,5 +101,6 @@ class User extends Authenticatable
       return $response;
 
     }
+
 
 }

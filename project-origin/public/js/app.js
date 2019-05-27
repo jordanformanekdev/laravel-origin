@@ -1794,8 +1794,6 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     var _this = this;
 
-    console.log("Laravel CSRF ++ ");
-    console.log("CHECK2" + Laravel.user);
     this.stripe = StripeCheckout.configure({
       key: Laravel.stripeKey,
       image: "https://stripe.com/img/documentation/checkout/marketplace.png",
@@ -1904,6 +1902,117 @@ __webpack_require__.r(__webpack_exports__);
       return this.plans.find(function (plan) {
         return plan.id == id;
       });
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/UserProfile/ProfileImageUploadComponent.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/UserProfile/ProfileImageUploadComponent.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      files: []
+    };
+  },
+  methods: {
+    // your methods here
+    handleFiles: function handleFiles() {
+      var uploadedFiles = this.$refs.files.files;
+
+      for (var i = 0; i < uploadedFiles.length; i++) {
+        this.files.push(uploadedFiles[i]);
+      }
+
+      this.getImagePreviews();
+    },
+    getImagePreviews: function getImagePreviews() {
+      var _this = this;
+
+      var _loop = function _loop(i) {
+        if (/\.(jpe?g|png|gif)$/i.test(_this.files[i].name)) {
+          var reader = new FileReader();
+          reader.addEventListener("load", function () {
+            this.$refs['preview' + parseInt(i)][0].src = reader.result;
+          }.bind(_this), false);
+          reader.readAsDataURL(_this.files[i]);
+        } else {
+          _this.$nextTick(function () {
+            this.$refs['preview' + parseInt(i)][0].src = '/img/generic.png';
+          });
+        }
+      };
+
+      for (var i = 0; i < this.files.length; i++) {
+        _loop(i);
+      }
+    },
+    removeFile: function removeFile(key) {
+      this.files.splice(key, 1);
+      this.getImagePreviews();
+    },
+    submitFiles: function submitFiles() {
+      var _this2 = this;
+
+      var _loop2 = function _loop2(i) {
+        if (_this2.files[i].id) {
+          return "continue";
+        }
+
+        var formData = new FormData();
+        formData.append('file', _this2.files[i]);
+        axios.post('/profile-image/store', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }).then(function (data) {
+          this.files[i].id = data['data']['id'];
+          this.files.splice(i, 1, this.files[i]);
+          console.log('success');
+        }.bind(_this2)).catch(function (data) {
+          console.log('error');
+        });
+      };
+
+      for (var i = 0; i < this.files.length; i++) {
+        var _ret = _loop2(i);
+
+        if (_ret === "continue") continue;
+      }
     }
   }
 });
@@ -37229,6 +37338,116 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/UserProfile/ProfileImageUploadComponent.vue?vue&type=template&id=52b511fe&":
+/*!******************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/UserProfile/ProfileImageUploadComponent.vue?vue&type=template&id=52b511fe& ***!
+  \******************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container" }, [
+    _vm.files.length > 0
+      ? _c(
+          "div",
+          { staticClass: "filezone" },
+          _vm._l(_vm.files, function(file, key) {
+            return _c("div", { staticClass: "file-listing" }, [
+              _c("img", {
+                ref: "preview" + parseInt(key),
+                refInFor: true,
+                staticClass: "preview"
+              }),
+              _vm._v("\n        " + _vm._s(file.name) + "\n        "),
+              file.id > 0
+                ? _c("div", { staticClass: "success-container" }, [
+                    _vm._v("\n            Success\n        ")
+                  ])
+                : _c("div", { staticClass: "remove-container" }, [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "remove",
+                        on: {
+                          click: function($event) {
+                            return _vm.removeFile(key)
+                          }
+                        }
+                      },
+                      [_vm._v("Remove")]
+                    )
+                  ])
+            ])
+          }),
+          0
+        )
+      : _c("div", { staticClass: "filezone" }, [
+          _c("input", {
+            ref: "files",
+            attrs: { type: "file", id: "files", multiple: "" },
+            on: {
+              change: function($event) {
+                return _vm.handleFiles()
+              }
+            }
+          }),
+          _vm._v(" "),
+          _vm._m(0)
+        ]),
+    _vm._v(" "),
+    _c(
+      "a",
+      {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.files.length > 0,
+            expression: "files.length > 0"
+          }
+        ],
+        staticClass: "submit-button",
+        on: {
+          click: function($event) {
+            return _vm.submitFiles()
+          }
+        }
+      },
+      [_vm._v("Submit")]
+    ),
+    _vm._v(" "),
+    _c(
+      "a",
+      { staticClass: "profile-button", attrs: { href: "/user/profile" } },
+      [_vm._v("Back To Profile")]
+    )
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("p", [
+      _vm._v("\n          Drop your files here "),
+      _c("br"),
+      _vm._v("or click to search\n      ")
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js":
 /*!********************************************************************!*\
   !*** ./node_modules/vue-loader/lib/runtime/componentNormalizer.js ***!
@@ -49355,6 +49574,7 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 
 Vue.component('checkout-form', __webpack_require__(/*! ./components/CheckoutForm.vue */ "./resources/js/components/CheckoutForm.vue").default);
 Vue.component('subscription-form', __webpack_require__(/*! ./components/SubscriptionForm.vue */ "./resources/js/components/SubscriptionForm.vue").default);
+Vue.component('profile-image-upload', __webpack_require__(/*! ./components/UserProfile/ProfileImageUploadComponent.vue */ "./resources/js/components/UserProfile/ProfileImageUploadComponent.vue").default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -49558,6 +49778,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SubscriptionForm_vue_vue_type_template_id_55d8ed6c___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SubscriptionForm_vue_vue_type_template_id_55d8ed6c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/UserProfile/ProfileImageUploadComponent.vue":
+/*!*****************************************************************************!*\
+  !*** ./resources/js/components/UserProfile/ProfileImageUploadComponent.vue ***!
+  \*****************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ProfileImageUploadComponent_vue_vue_type_template_id_52b511fe___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ProfileImageUploadComponent.vue?vue&type=template&id=52b511fe& */ "./resources/js/components/UserProfile/ProfileImageUploadComponent.vue?vue&type=template&id=52b511fe&");
+/* harmony import */ var _ProfileImageUploadComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ProfileImageUploadComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/UserProfile/ProfileImageUploadComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _ProfileImageUploadComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ProfileImageUploadComponent_vue_vue_type_template_id_52b511fe___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _ProfileImageUploadComponent_vue_vue_type_template_id_52b511fe___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/UserProfile/ProfileImageUploadComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/UserProfile/ProfileImageUploadComponent.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************************!*\
+  !*** ./resources/js/components/UserProfile/ProfileImageUploadComponent.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ProfileImageUploadComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./ProfileImageUploadComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/UserProfile/ProfileImageUploadComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ProfileImageUploadComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/UserProfile/ProfileImageUploadComponent.vue?vue&type=template&id=52b511fe&":
+/*!************************************************************************************************************!*\
+  !*** ./resources/js/components/UserProfile/ProfileImageUploadComponent.vue?vue&type=template&id=52b511fe& ***!
+  \************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ProfileImageUploadComponent_vue_vue_type_template_id_52b511fe___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./ProfileImageUploadComponent.vue?vue&type=template&id=52b511fe& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/UserProfile/ProfileImageUploadComponent.vue?vue&type=template&id=52b511fe&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ProfileImageUploadComponent_vue_vue_type_template_id_52b511fe___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ProfileImageUploadComponent_vue_vue_type_template_id_52b511fe___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

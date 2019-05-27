@@ -22,6 +22,7 @@ window.Vue = require('vue');
 
 Vue.component('checkout-form', require('./components/CheckoutForm.vue').default);
 Vue.component('subscription-form', require('./components/SubscriptionForm.vue').default);
+Vue.component('profile-image-upload', require('./components/UserProfile/ProfileImageUploadComponent.vue').default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

@@ -21,6 +21,7 @@
     <link href="{{ asset('css/checkout-form.css') }}" rel="stylesheet">
     <link href="{{ asset('css/subscription-form.css') }}" rel="stylesheet">
 
+
     <!-- Global Script -->
     <script type="text/javascript">
       var Laravel = {
@@ -39,7 +40,7 @@
 
 </head>
 <body>
-    <div id="app">
+    <div class="app" id="app">
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
@@ -98,9 +99,13 @@
             </div>
         </nav>
 
-        <main class="py-4">
+        <main class="content">
             @yield('content')
         </main>
+        <div class="content-footer">
+          @include('layouts.footer')
+        </div>
     </div>
+
 </body>
 </html>

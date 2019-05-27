@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Project;
 use App\Product;
 use App\Plan;
+use App\ProfileImage;
 use App\Events\ProjectCreated;
 
 
@@ -25,7 +26,9 @@ class UserProfileController extends Controller
 
       $plans = Plan::all();
 
-      return view('user.profile', compact('user', 'products', 'plans'));
+      $profileImage = $user->profileImages()->latest()->first();
+
+      return view('user.profile', compact('user', 'products', 'plans', 'profileImage'));
     }
     // //
     // // public function create()
