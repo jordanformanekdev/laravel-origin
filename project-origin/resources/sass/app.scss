@@ -4,10 +4,101 @@
 
 // Variables
 @import 'variables';
+@import 'components/ProfileImageUploadComponent';
+@import 'views/users/ProfilePage';
+@import 'views/layout/Content';
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
+// A container using the flexbox layout.
+@mixin flex-container {
+
+	// See? Simple.
+	display: flex;
+  overflow: hidden;
+
+  justify-content: right;
+	// Set all direct children to NOT flex...
+	> * {
+
+		flex: 0 0 auto;
+    overflow: scroll;
+	}
+}
+
+// ...unless explicitly marked as stretchy.
+// Obviously, you can do it the opposite way.
+@mixin stretchy {
+
+	flex: 1 1 auto;
+}
+
+// The .flex-container can be a column instead of a row.
+@mixin column {
+
+	flex-direction: column;
+}
+
+
+html, body, .app {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+}
+
+.app {
+  > nav {
+    overflow: visible;
+  }
+  @include flex-container;
+  @include column;
+
+  > .navbar-laravel,
+  > .content-footer {
+    height: 50px;
+    border: 1px solid #ccc;
+  }
+
+  > .content {
+    @include stretchy;
+    @include flex-container;
+
+
+    >.content-left,
+    >.content-right {
+      width: 250px;
+      border: 1px solid #ccc;
+    }
+
+    >.content-center {
+      @include stretchy;
+    }
+  }
+}
+
+
+// html, body, .app {
+//   height: 100%;
+// }
+//
+// body {
+//   display: flex;
+//   flex-direction: column;
+//   margin: 0;
+// }
+//
+// footer {
+//   flex-shrink: 0;
+// }
+//
+// .app {
+//   display: flex;
+//   flex-direction: column;
+//   flex: 1 0 auto;
+// }
 
 .navbar-laravel {
   background-color: #fff;

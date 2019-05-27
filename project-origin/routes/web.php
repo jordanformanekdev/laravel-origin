@@ -41,6 +41,17 @@ Route::resource('projects', 'ProjectsController');
 Route::post('/projects/{project}/tasks', 'ProjectTasksController@store');
 Route::patch('/tasks/{task}', 'ProjectTasksController@update');
 
+/**** User Profile ****/
+Route::get('/user/profile', 'UserProfileController@index');
+Route::post('/profile-image/store', 'ProfileImageController@store');
+Route::get('/profile-image', 'ProfileImageController@index');
+Route::get('profile-image/create', 'ProfileImageController@create');
+
+/**** User Subscription ****/
+Route::get('/user/subscription', 'SubscriptionPageController@index');
+
+
+/**** Webhooks ****/
 Route::post('/stripe/webhook', 'WebhooksController@handle');
 
 Auth::routes();

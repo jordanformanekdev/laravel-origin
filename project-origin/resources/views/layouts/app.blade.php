@@ -21,6 +21,7 @@
     <link href="{{ asset('css/checkout-form.css') }}" rel="stylesheet">
     <link href="{{ asset('css/subscription-form.css') }}" rel="stylesheet">
 
+
     <!-- Global Script -->
     <script type="text/javascript">
       var Laravel = {
@@ -39,7 +40,7 @@
 
 </head>
 <body>
-    <div id="app">
+    <div class="app" id="app">
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
@@ -74,11 +75,18 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="/home">
+                                        {{ __('home') }}
+                                    </a>
+                                    <a class="dropdown-item" href="/user/profile">
+                                        {{ __('Profile') }}
+                                    </a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
+
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                         @csrf
@@ -91,9 +99,13 @@
             </div>
         </nav>
 
-        <main class="py-4">
+        <main class="content">
             @yield('content')
         </main>
+        <div class="content-footer">
+          @include('layouts.footer')
+        </div>
     </div>
+
 </body>
 </html>
