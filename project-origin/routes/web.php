@@ -47,6 +47,9 @@ Route::post('/profile-image/store', 'ProfileImageController@store');
 Route::get('/profile-image', 'ProfileImageController@index');
 Route::get('profile-image/create', 'ProfileImageController@create');
 
+/**** User Tracks ****/
+Route::get('/user/tracks', 'TracksController@index');
+
 /**** User Subscription ****/
 Route::get('/user/subscription', 'SubscriptionPageController@index');
 
